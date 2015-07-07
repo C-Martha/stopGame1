@@ -1,3 +1,4 @@
+
 <?php
 
 $dbhost = '50.62.209.47:3306';
@@ -9,25 +10,30 @@ $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
-	die("Connection failed: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error);
 } 
 
 echo "Connected successfully";
 
-$userID = $POST['username']; 
-$country = $POST['answer1']; 
+$userID = $_POST['username']; 
+
+$code = 'DFKD'; 
+
+
+//generate random word for code 
+
+
 
 
 //insert data into database 
 $sql = "INSERT INTO leaderboard (Code, UserID, Score)
-VALUES (NULL, '{$username}', '{$answer1}', '{$score}')";
+VALUES ('{$code}', '{$userID}', NULL)";
 
 if ($conn->query($sql) === TRUE) {
-	echo "New record created successfully";
+    echo "New record created successfully";
 } else {
-	echo "Error: " . $sql . "<br>" . $conn->error;
+    echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
 $conn->close();
 ?>
-
