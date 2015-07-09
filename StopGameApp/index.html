@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Stop!</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  
+ <!--connect to css page-->
+  <link rel="stylesheet" type="text/css" href="register.css">
+  
+  
+</head>
+<body>
+ 
+ <!-- banner -->
+  <div class="container">
+    <div class="jumbotron">
+      <h1>Play STOP! </h1>
+      <p> </p> 
+    </div>
+    <br><br><br><br>
+ <!-- input and submition button -->
+ 
+    <div class="row">
+     <!-- form to submit userID and create game -->
+    <div class="col-sm-6"> <!--divides page into two columns -->
+     <div class="col-sm-offset-7"> <h3>Create game! </h3>
+     <form id = "usernameForm" class="form-horizontal" role="form" action="playerLogIn.php" method="post">
+          <div class="form-group">
+      <div class="col-sm-10">
+              <input type="username" class="form-control" name="username" placeholder="Enter username" required>
+ 
+       </div> 
+          </div>
+           <!--submit button -->
+           <div class="form-group"> 
+            <div class="col-sm-offset-5 col-sm-10">
+              <button type="submit" name="submit" class="btn btn-default"  >Submit</button>
+            </div>
+        </div>
+          </div>
+          </form>
+    </div>
+    <div class="col-sm-6">
+     <!-- form to submit game code and start game -->
+      <div class="col-sm-offset-0">
+      <h3>Join Game!</h3>
+       <form id = "usernameForm" class="form-horizontal" role="form" action="joinGamePlayer.php" method="post">
+          <div class="form-group">
+      <div class="col-sm-5">
+    
+              <input type="username" class="form-control" name="username" placeholder="Enter username" required>
+               <br>
+              <input type="code" class="form-control" name="code" placeholder="Enter game code" required>
+      </div>
+              <br>
+       <!-- button to join game -->  
+          </div>
+           <div class="form-group"> 
+            <div class="col-sm-offset-3 col-sm-10">
+              <button type="submit" name="submit" class="btn btn-default" >Play</button>
+            </div>
+        
+          </div>
+          </form>
+          </div>
+    </div>
+   
+  </div>
+
+
+     
+ 
+    </body>
+    </html>
+
