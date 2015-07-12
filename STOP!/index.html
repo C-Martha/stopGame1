@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>College Events</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  
+ <!--connect to css page-->
+  <link rel="stylesheet" type="text/css" href="register.css">
+  
+<script type="text/javascript">
+//funtion to see if username is valid
+$(document).ready(function() 
+{
+   
+   $("#username").keyup(function (e) 
+      { //user types username on inputfiled
+          var username = $(this).val(); //get the string typed by user
+   
+     $.post('loginUser.php', {'username':username}, function(data) 
+        { //make ajax call to loginUser.php
+           $("#user-result").html(data); //dump the data received from PHP page
+        });
+     });
+ 
+}); 
+
+$(document).ready(function() 
+{
+
+  $("#usernameJ").keyup(function (m) 
+      { //user types username on inputfiled
+          var usernameJ = $(this).val(); //get the string typed by user
+   
+     $.post('joinUser.php', {'usernameJ':usernameJ}, function(data) 
+        { //make ajax call to joinUser.php
+           $("#usernameJ-result").html(data); //dump the data received from PHP page
+        });
+     });
+     
+}); 
+
+
+
+$(document).ready(function() 
+{
+
+  $("#code").keyup(function (m) 
+      { //user types code on inputfiled
+          var code = $(this).val(); //get the string typed by user
+   
+     $.post('joinUser.php', {'code':code}, function(data) 
+        { //make ajax call to joinUser.php
+           $("#code-result").html(data); //dump the data received from PHP page
+        });
+     });
+     
+}); 
+
+
+</script>
+
+  
+</head>
+<body>
+ 
+ <!-- banner -->
+  <div class="container">
+    <div class="jumbotron">
+      <h1>STOP game!</h1>
+      <p> </p> 
+    </div>
+    <br><br><br>
+ <!-- input and submition button -->
+ 
+    <div class="row">
+     <!-- form to submit userID and login  -->
+   <div class="col-sm-6">
+     <!-- form to submit user info and login -->
+      <div class="col-sm-offset-6">
+      <h3>Create Game</h3>
+       <form id = "LogInForm"  class="form-horizontal" role="form" action="loginUser.php" autocomplete="off" method="post">
+          <div class="form-group">
+      <div class="col-sm-10">
+    
+              <input type="username" id="username" class="form-control" name="username" placeholder="username" required>
+              <span id="user-result"></span> <!--place where icon of state of username goes -->
+      </div>
+              <br>
+       <!-- button to log into account -->  
+          </div>
+           <div class="form-group"> 
+            <div class="col-sm-offset-3 col-sm-10">
+              <button type="submit" id="submitLog" name="submitLog" class="btn btn-default" >Create!</button>
+            </div>
+        
+          </div>
+          </form>
+          </div>
+    </div>
+    <div class="col-sm-6">
+     <!-- form to submit user info and create account -->
+      <div class="col-sm-offset-0">
+      <h3>Join Game</h3>
+       <form id = "createAccountForm" class="form-horizontal" role="form" action="joinUser.php" autocomplete="off" method="post">
+          <div class="form-group">
+      <div class="col-sm-5">
+              
+              <input type="username" id="usernameJ" class="form-control" name="usernameJ" placeholder="username" required>
+              <span id="usernameJ-result"></span>
+               <br>
+               <input type="username" id="code" class="form-control" name="code" placeholder="Enter game code"  required>
+              <span id="code-result"></span>
+              
+      </div>
+              <br>
+       <!-- button to create account -->  
+          </div>
+           <div class="form-group"> 
+            <div class="col-sm-offset-3 col-sm-10">
+             
+              <button type="submit" name="submitJoin" id="submitJoin" class="btn btn-default" >Join!</button>
+            
+            </div>
+        
+          </div>
+          </form>
+          </div>
+    </div>
+   
+  </div>
+  
+
+
+
+
+
+ 
+ 
+    </body>
+    </html>
