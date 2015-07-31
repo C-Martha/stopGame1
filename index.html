@@ -82,7 +82,7 @@ $(document).ready(function()
      <!-- form to submit userID and login  -->
    <div class="col-sm-6">
      <!-- form to submit user info and login -->
-      <div class="col-sm-offset-6">
+      <div class="col-sm-offset-5">
       <h3>Create Game</h3>
        <form id = "LogInForm"  class="form-horizontal" role="form" action="loginUser.php" autocomplete="off" method="post">
           <div class="form-group">
@@ -92,14 +92,30 @@ $(document).ready(function()
               <span id="user-result"></span> <!--place where icon of state of username goes -->
       </div>
               <br>
-       <!-- button to log into account -->  
+              
+ <br>
+       <!-- radio button to see how many players will be on the game -->  
           </div>
+<p><b> How many more players?  </b> </p>       
+<div class="radio">
+  <label><input type="radio" name= "players" value="2" id="2">1 more</label>
+</div>
+<div class="radio">
+  <label><input type="radio" name= "players" value="3" id="3">2 more</label>
+</div>
+<div class="radio">
+  <label><input type="radio" name= "players" value="4" id="4" >3 more</label>
+</div>
+ 
+   <!-- button to log into account -->  
+  <br><br>    
            <div class="form-group"> 
             <div class="col-sm-offset-6 col-sm-10">
               <button type="submit" id="submitLog" name="submitLog" class="btn btn-default" >Create!</button>
             </div>
         
           </div>
+          
           </form>
           </div>
     </div>

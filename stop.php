@@ -10,9 +10,9 @@ header('Content-Type: text/event-stream');
 header('Cache-Control: no-cache');
 
 $code = $_SESSION['code']; 
+$letter =  $_SESSION['letter']; 
 
-
-$sql = "SELECT stop FROM game WHERE code = '{$code}' ";
+$sql = "SELECT stop FROM game WHERE code = '{$code}' AND letter = '{$letter}' ";
 
 $result = $conn->query($sql);
 

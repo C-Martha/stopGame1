@@ -6,7 +6,7 @@ session_start();
 
 //file to connect to database
 require_once 'login.php';
-
+require_once 'tracker.php'; 
 
 // Create connection
 $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
@@ -16,6 +16,9 @@ if ($conn->connect_error)
 {
     die("Connection failed: " . $conn->connect_error);
 }
+
+
+
 
 
 //executed if user signs in 
@@ -36,11 +39,12 @@ if(isset($_POST['submitLog']))
    $_SESSION['username'] = $users_name; 
    $_SESSION['code'] = $code; 
   
- 
+   $players = $_POST['players'];
+
      
         //insert user data into database 
-    $sql = "INSERT INTO leaderboard (userID, code, score)
-    VALUES ('{$users_name}', '{$code}', NULL )"; 
+    $sql = "INSERT INTO leaderboard (userID, code, numPlayers)
+    VALUES ('{$users_name}', '{$code}', '{$players}' )"; 
     
  
     if ($conn->query($sql) === TRUE) {
@@ -49,10 +53,9 @@ if(isset($_POST['submitLog']))
         echo "An error ocurred creating your username, please try again!"; 
     }
     
-
-        
+    
+  
 }
- 
   
    if (isset($_POST["username"]) & isset($_POST['submitLog']) == NULL )
     {
@@ -78,10 +81,84 @@ if(isset($_POST['submitLog']))
     
     }
     
+    
+
 
     
 
+
+//how many players will be on the game
+if($players = $_POST['players']){
+    if($players == "2"){
+     echo " Two "; 
+    } else if($players == "3"){
+     echo " Three "; 
+    } else if($players == "4"){
+     echo "Four "; 
+    }
+}
+  
+  //keep track of numbe of players
+  $_SESSION['players'] = $players; 
+  
+  
+
+$_SESSION['counter'] = 0;
+    
+	
+	$alphabet = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
+	$arrlength = count($alphabet);
+	
+	echo  $arrlength; 
+	echo "<br>"; 
+	
+	
+	shuffle($alphabet);
+		
+	for($x = 0; $x < $arrlength; $x++) {
+	
+    echo $alphabet[$x];
+
+	}
+    
+    echo "<br>"; 
+    //turn array into string to save database
+    $catArray = mysql_escape_string(serialize($alphabet));
+    echo $catArray; 
+    
+    echo "<br>";
+    $sql = "INSERT INTO letters (letterArray, code) VALUES ('{$catArray}', '{$code}') "; 
+  
+  if ($conn->query($sql) === TRUE) {
+   echo "RANDOM ALPHA SUBMITTED";
+    } else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+    
+    
+//go through randomized array
+
+/*
+	static $i; 
+	
+	if(isset($_POST['nextL'])){
+		
+	for($i = 0; $i < $arrlength; $i++){
+		
+	echo $alphabet[$i];
+	
+	}
+	}
+  
+  
+*/
+
+
+
 $conn->close();
+
+
+
 
 ?>
 
@@ -96,13 +173,29 @@ $conn->close();
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  
+ <script>
+if(typeof(EventSource) !== "undefined") {
+    var source = new EventSource("waiting.php");
+    
+    source.onmessage = function(event) {
+        document.getElementById("result").innerHTML += event.data + "<br>";
+        
+        document.getElementById('startGame').submit();
+        
+    };
+} else {
+    document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
+}
+</script>
+  
 </head>
 <body>
     <!-- banner -->
     <div class="container">
     <div class="jumbotron">
       <h1>STOP! Game! </h1>
-      <p> </p> 
+      <p>  Player ID:  <?php echo  $users_name ?> </p> 
     </div>
     <br><br><br><br>
     <!-- output userinfo -->
@@ -120,11 +213,11 @@ $conn->close();
 </h2> 
   <br><br><br>  
     <!--button to start game! -->
-    <form action="PlayGame.php">
+    <form action="PlayGame.php" id= "startGame" method ="post">
     <button type="submit" name="start" id="start" class="btn btn-success">Start Game!</button>
     </form>
     
-    
+<div id="result"></div>    
 
 </body>
 </html>

@@ -24,6 +24,12 @@
 		$loggedin = TRUE;
 
 		$userstring = "$user";
+		
+		$totalP = $_SESSION['players']; 
+		
+		$counter = $_SESSION['counter']; 
+		
+		//$letter = $_SESSION['letter']; 
 
 	}
 

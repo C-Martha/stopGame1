@@ -1,32 +1,103 @@
 <?php
 	
+		session_start(); 
+	
 require_once 'login.php';
+require_once 'tracker.php'; 
 
-
-	session_start(); 
-	
-	
-	$alphabet = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
-	$arrlength = count($alphabet);
-	
-	 shuffle($alphabet);
-
-//go through randomized array
-
-	static $i; 
-	
-	for($i = 0; $i < $arrlength; $i++){
-		
-	echo $alphabet[$i];
-	
-	}
 	
  	$username = $_SESSION['username']; 
 	$code = $_SESSION['code']; 
+
+//get value of counter
+$counter = $_SESSION['counter']; 
+
+
+
+//if first round is being played
+if($counter == 0){
+
+	//get array for game
+	$sql = "SELECT letterArray FROM letters WHERE code = '{$code}'";
+	$result = $conn->query($sql);
+
+	//check if code exist and array exist
+	if ($result->num_rows > 0) {
+    // output data of each row
+    $row = $result->fetch_assoc(); 
+	
+	
+	$serializedArray = $row["letterArray"]; 
+	echo "serialized ARRY";
+	echo "<br>"; 
+   echo $serializedArray; 
+   
+
+   
+   //unserialized array from db
+	$UnArray = unserialize(stripslashes($serializedArray)); 
+	
+	echo "letter"; 
+	echo "<br>"; 
+	echo $UnArray[$counter]; 
+		$letter = $UnArray[$counter]; 
+		
+		
+	$_SESSION['letter'] = $letter; 	
+		
+ //no code found
+} else {
+    echo "0 results";
+}
+
+//for second and rest of rounds
+} else if($counter < 26) {
+	
+	//increment value of counter to move through array
+	$_SESSION['counter'] = $counter; 
+	echo $counter; 
+	echo "<br>"; 
+	
+	$sql = "SELECT letterArray FROM letters WHERE code = '{$code}'";
+	$result = $conn->query($sql);
+
+	
+	if ($result->num_rows > 0) {
+    // output data of each row
+    $row = $result->fetch_assoc(); 
+	
+	$serializedArray = $row["letterArray"]; 
+	echo "serialized ARRY";
+	echo "<br>"; 
+   echo $serializedArray; 
+   
+   	$arrlength = count($serializedArray);
+	   
+	   echo "length";
+	   echo $arrlength; 
+   
+	$UnArray = unserialize(stripslashes($serializedArray)); 
+	echo "<br>"; 
+	echo "letter"; 
+	echo "<br>"; 
+	$letter = $UnArray[$counter]; 
+	echo $letter; 
 	
 
-		
-	$sql = "INSERT INTO game (playerID, code) VALUES ('{$username}', '{$code}')";
+	
+	
+	$_SESSION['letter'] = $letter; 	
+}
+
+} if($counter == 26){
+	
+	//show total score of all players!!!
+	
+}
+
+
+
+	$sql = "INSERT INTO game (playerID, code, letter) VALUES ('{$username}', '{$code}', '{$letter}')";
 		
 //check if submition was successfull
 if ($conn->query($sql) === TRUE) {
@@ -34,10 +105,6 @@ if ($conn->query($sql) === TRUE) {
 } else {
 	echo "Error: " . $sql . "<br>" . $conn->error;
 }
-
-
-
-
 
 	?> 
 
@@ -66,7 +133,27 @@ if(typeof(EventSource) != "undefined") {
         document.getElementById("halt").innerHTML += event.data + "<br>";
 		
 
-			document.getElementById("game").submit();
+     
+var count=5;
+
+var counter=setInterval(timer, 1000); //1000 will  run it every 1 second
+
+  function timer()
+ {
+ count=count-1;
+  if (count <= 0)
+  {
+  clearInterval(counter);
+  
+  //go to next round when counter is over
+document.getElementById("game").submit();
+
+   return;
+}
+  //send countdown in seconds to html
+document.getElementById('demo').innerHTML=count + ' secs';
+}
+			
 
     };
 
@@ -87,10 +174,10 @@ if(typeof(EventSource) != "undefined") {
 	<div class="container">
 		<div class="jumbotron">
 			<h1>Play STOP! </h1>
-			<p> </p> 
+			<p> Player ID: <?php echo $username ?> </p> 
 		</div>
 
-	<p id="demo"></p>
+	<!-- <p id="demo"></p>-->
 
 		
 			
@@ -157,7 +244,8 @@ if(typeof(EventSource) != "undefined") {
 	
 
 
-
+<p> STOP!!! ... </p> 
+<p id='demo'></p>
 
 	</body>
 	</html>

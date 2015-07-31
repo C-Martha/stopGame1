@@ -6,37 +6,25 @@ require_once 'login.php';
 
 
 	
-	$alphabet = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
-	$arrlength = count($alphabet);
 	
-	shuffle($alphabet);
 
-//go through randomized array
-	for($i = 0; $i < $arrlength; $i++){
-		
-	echo $alphabet[$i];
+ $alphabet = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
+ // $arrlength = count($alphabet);
 	
-	}
-	
-	echo "<br>"; 
-	
-	$pick = "Abbot"; 
+  $newArray =  shuffle($alphabet);
 
-	//check username in db
-	$results = mysqli_query($conn ,"SELECT cID FROM City WHERE A ='{$pick}'");
-	
-	//return total count
-	$username_exist = mysqli_num_rows($results); //total records
-	
-	//if value is more than 0, username is not available
-	if($username_exist) 
-        {
-			echo "no found"; 
-        } else
-        {
-		  echo "found"; 
-        }
+  $SnewArray = mysql_escape_string(serialize($newArray));
+
+
+  $sql = "INSERT INTO letters (letterArray, code)  VALUES ('{$SnewArray}', '{$code}')"; 
     
+   //check if submition was successfull
+if ($conn->query($sql) === TRUE) {
+	echo "RANDOM LETTERS SUBMITTED SUCCESSFULLY";
+} else {
+	echo "Error: " . $sql . "<br>" . $conn->error;
+}
+
     
 
 
