@@ -1,13 +1,22 @@
 <?php
 	
-	require_once 'login.php'; 
+    session_start(); 
+    
+	//file to contain to database
+require_once 'login.php';
+require_once 'tracker.php';
 	
-	$code = $_POST['code']; 
-	
+header('Content-Type: text/event-stream');
+header('Cache-Control: no-cache');
 
-$sql = "SELECT stop FROM game WHERE code = '{$code}' ";
+$code = $_POST['code']; 
+$letter =  $_POST['letter']; 
+
+$sql = "SELECT stop FROM Answers WHERE code = '{$code}' AND letter = '{$letter}' ";
 
 $result = $conn->query($sql);
+
+
 
 if ($result->num_rows > 0) {
 	
@@ -17,16 +26,25 @@ if ($result->num_rows > 0) {
          
          if($row['stop'] == 1){
              
-         return "1"; 
+             
+         $sql = "UPDATE Answers SET stop = '1' WHERE code = '{$code}' AND letter = '{$letter}' ";   
+         echo "data: id: " . $row["stop"] .  "<br> \n\n"; 
          
-         } else {
-			 return "0"; 
-
-		 } 
+         } 
+           
     }
 } else {
-    echo "data: 0 results\n\n";
+  //  echo "data: 0 results\n\n";
 }
 
+   
 
-?> 
+
+
+
+$conn->close();
+
+
+flush();
+
+?>

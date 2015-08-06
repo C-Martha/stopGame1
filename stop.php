@@ -12,7 +12,7 @@ header('Cache-Control: no-cache');
 $code = $_SESSION['code']; 
 $letter =  $_SESSION['letter']; 
 
-$sql = "SELECT stop FROM game WHERE code = '{$code}' AND letter = '{$letter}' ";
+$sql = "SELECT stop FROM Answers WHERE code = '{$code}' AND letter = '{$letter}' ";
 
 $result = $conn->query($sql);
 
@@ -26,9 +26,11 @@ if ($result->num_rows > 0) {
          
          if($row['stop'] == 1){
              
-         echo "data: id: " . $row["stop"] .  "<br> \n\n"; 
+             
+         $sql = "UPDATE Answers SET stop = '1' WHERE code = '{$code}' AND letter = '{$letter}' ";   
+         echo "data: STOP!! <br> \n\n"; 
          
-         }
+         } 
            
     }
 } else {
@@ -36,11 +38,13 @@ if ($result->num_rows > 0) {
 }
 
    
+
+
+
+
 $conn->close();
 
 
 flush();
-
-
 
 ?>

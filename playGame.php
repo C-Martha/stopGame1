@@ -28,18 +28,18 @@ if($counter == 0){
 	
 	
 	$serializedArray = $row["letterArray"]; 
-	echo "serialized ARRY";
-	echo "<br>"; 
-   echo $serializedArray; 
+	//echo "serialized ARRY";
+	//echo "<br>"; 
+   //echo $serializedArray; 
    
 
    
    //unserialized array from db
 	$UnArray = unserialize(stripslashes($serializedArray)); 
 	
-	echo "letter"; 
-	echo "<br>"; 
-	echo $UnArray[$counter]; 
+	//echo "letter"; 
+	//echo "<br>"; 
+	//echo $UnArray[$counter]; 
 		$letter = $UnArray[$counter]; 
 		
 		
@@ -47,7 +47,7 @@ if($counter == 0){
 		
  //no code found
 } else {
-    echo "0 results";
+   // echo "0 results";
 }
 
 //for second and rest of rounds
@@ -55,8 +55,8 @@ if($counter == 0){
 	
 	//increment value of counter to move through array
 	$_SESSION['counter'] = $counter; 
-	echo $counter; 
-	echo "<br>"; 
+	//echo $counter; 
+	//echo "<br>"; 
 	
 	$sql = "SELECT letterArray FROM letters WHERE code = '{$code}'";
 	$result = $conn->query($sql);
@@ -67,24 +67,23 @@ if($counter == 0){
     $row = $result->fetch_assoc(); 
 	
 	$serializedArray = $row["letterArray"]; 
-	echo "serialized ARRY";
-	echo "<br>"; 
-   echo $serializedArray; 
+	//echo "serialized ARRY";
+	//echo "<br>"; 
+  // echo $serializedArray; 
    
    	$arrlength = count($serializedArray);
 	   
-	   echo "length";
-	   echo $arrlength; 
+	  // echo "length";
+	  // echo $arrlength; 
    
 	$UnArray = unserialize(stripslashes($serializedArray)); 
-	echo "<br>"; 
-	echo "letter"; 
-	echo "<br>"; 
+	//echo "<br>"; 
+	//echo "letter"; 
+	//echo "<br>"; 
 	$letter = $UnArray[$counter]; 
-	echo $letter; 
+	//echo $letter; 
 	
 
-	
 	
 	$_SESSION['letter'] = $letter; 	
 }
@@ -96,15 +95,20 @@ if($counter == 0){
 }
 
 
-
-	$sql = "INSERT INTO game (playerID, code, letter) VALUES ('{$username}', '{$code}', '{$letter}')";
+	$sql = "INSERT INTO Answers (playerID, code, letter) VALUES ('{$username}', '{$code}', '{$letter}')";
 		
 //check if submition was successfull
 if ($conn->query($sql) === TRUE) {
-	echo "New record created successfully";
+	//echo "New record created successfully";
 } else {
-	echo "Error: " . $sql . "<br>" . $conn->error;
+	//echo "Error: " . $sql . "<br>" . $conn->error;
 }
+
+
+
+
+
+
 
 	?> 
 
@@ -113,18 +117,23 @@ if ($conn->query($sql) === TRUE) {
 <head>
 	<title>Stop!</title>
 	<meta charset="utf-8">
-	
+
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
  	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	  <link rel="stylesheet" type="text/css" href="register.css">
+	<link rel="stylesheet" type="text/css" href="game.css">
 	  
 
-		  
+
+
+
 <!-- check value of stop, to see if user has finished -->
+
 <script>
+	
+	
 if(typeof(EventSource) != "undefined") {
 	//file where events are coming from
     var source = new EventSource("stop.php");
@@ -132,61 +141,83 @@ if(typeof(EventSource) != "undefined") {
 		
         document.getElementById("halt").innerHTML += event.data + "<br>";
 		
-
-     
+	
+		
+  //count down, go to next round when countdown is over
 var count=5;
 
 var counter=setInterval(timer, 1000); //1000 will  run it every 1 second
 
-  function timer()
- {
- count=count-1;
+function timer()
+{
+count=count - 1;
   if (count <= 0)
   {
-  clearInterval(counter);
+   clearInterval(counter);
   
   //go to next round when counter is over
-document.getElementById("game").submit();
+  document.getElementById('game').submit();
 
-   return;
-}
+    return;
+  }
   //send countdown in seconds to html
-document.getElementById('demo').innerHTML=count + ' secs';
+document.getElementById('yes').innerHTML= count + ' secs';
 }
-			
+     
+		
+		source.close(); 
+     
+
+	 /// document.getElementById('game').submit();
 
     };
 
 } else {
     document.getElementById("halt").innerHTML = "Sorry, your browser does not support server-sent events...";
 }
+
+
 </script>
-	  
-  
-	  
+
+
+
+<style>
+	
+	
+		
+		h3 {text-align:center; color: red;}
+		
+		#text {color: #FF0066; }
+	
+	#letters {text-align:center; color: #FF0066; }
+	</style>
 </head>
 <body>
 	
 
 
 <!-- banner (make it nice!) -->
-
-	<div class="container">
-		<div class="jumbotron">
+<a href = "index.html">
+	<div class="jumbotron">
+		<div class ='col-sm-offset-3'>
 			<h1>Play STOP! </h1>
 			<p> Player ID: <?php echo $username ?> </p> 
+			</div>
 		</div>
+	</a>	
 
 	<!-- <p id="demo"></p>-->
 
-		
+		<h2 id = 'letters'> Letter: <?php echo $letter ?> </h2>
 			
 			<br><br><br><br><br>
 	<!-- Categories inputs --> 
-		<div class="row">
+		
 			<div class="container">
-				<form action="gameSubmit.php" id="game" method="post">
-					<div class="col-sm-2"> <!-- size of colum across page -->
+				<div class ='col-sm-offset-0'>
+			<div class="row">
+				<form action="stopCheck.php" id="game" method="post">
+					<div class="col-sm-2 "> <!-- size of colum across page -->
 						<div id = "text">Name</div><br>
 						<input type="text" id="name" name="name" placeholder="Name">
 						<br>
@@ -219,7 +250,7 @@ document.getElementById('demo').innerHTML=count + ' secs';
 					<div class="col-sm-2">
 						<div id = "text">Thing</div><br>
 						<input type="text" id="thing" name="thing" placeholder="Thing">
-						<br><br>
+					<br><br>
 		
 		<!--submit button (needs to start timer) -->
 					</div>
@@ -227,13 +258,18 @@ document.getElementById('demo').innerHTML=count + ' secs';
 					
 					<button type="submit" value="submit" id="stop" name="stop" class="col-sm-12 btn btn-danger">STOP!</button>
 				</div>
+				</div>
 			</form>
 		</div>
 		
+		    
+  
+				
+		<h3 id="halt"></h3>
+		<h3 id="yes"></h3>
 		
 		
-		<div id="halt"></div>
-		
+
 		
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -243,9 +279,8 @@ document.getElementById('demo').innerHTML=count + ' secs';
     <script src="js/bootstrap.min.js"></script>
 	
 
+	
 
-<p> STOP!!! ... </p> 
-<p id='demo'></p>
 
 	</body>
 	</html>

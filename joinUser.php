@@ -171,9 +171,12 @@ if(typeof(EventSource) !== "undefined") {
 <body>
     <!-- banner -->
     <div class="container">
-    <div class="jumbotron">
-      <h1>STOP Game!</h1>
-      <p> Player ID: <?php echo $users_name ?></p> 
+            <a href="index.html" >
+      <div class="jumbotron">
+ 
+      <h1>STOP! Game! </h1>
+      <p>  Player ID:  <?php echo  $users_name ?> </p> 
+    </a>
     </div>
     <br><br><br><br>
     <!-- output userinfo -->

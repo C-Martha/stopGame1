@@ -3,15 +3,39 @@
 <!DOCTYPE html>
 <html>
 	<head>
+	<script>
+if(typeof(EventSource) != "undefined") {
+	//file where events are coming from
+    var source = new EventSource("next.php");
+    source.onmessage = function(event) {
 		
+        document.getElementById("halt").innerHTML += event.data + "<br>";
+		
+
+  //go to next round when counter is over
+document.getElementById("game").submit();
+
+
+    };
+
+} else {
+    document.getElementById("halt").innerHTML = "Sorry, your browser does not support server-sent events...";
+}
+</script>
+	  	
 		
 </head>
 <body>
 
 
-<div>
-    <iframe src="index.html" height="900" width="1400" allowfullscreen="" frameborder="0">
-    </iframe>
-</div>
+<form action="gameSubmit.html" id="game" method="post">
+	
+	</form>
+
+
+   
+<h1> Waiting for everyones countdown to finish </h1>
+
+
 </body>
 </html>

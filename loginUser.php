@@ -28,7 +28,7 @@ if(isset($_POST['submitLog']))
     
    function generateRandomString($length = 5) 
    {
-   return substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+   return substr(str_shuffle("123456789abcdefghijkmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ"), 0, $length);
     }
 
     // Echo the random string.
@@ -90,11 +90,11 @@ if(isset($_POST['submitLog']))
 //how many players will be on the game
 if($players = $_POST['players']){
     if($players == "2"){
-     echo " Two "; 
+    // echo " Two "; 
     } else if($players == "3"){
-     echo " Three "; 
+    // echo " Three "; 
     } else if($players == "4"){
-     echo "Four "; 
+    // echo "Four "; 
     }
 }
   
@@ -109,30 +109,30 @@ $_SESSION['counter'] = 0;
 	$alphabet = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
 	$arrlength = count($alphabet);
 	
-	echo  $arrlength; 
-	echo "<br>"; 
+	//echo  $arrlength; 
+	//echo "<br>"; 
 	
 	
 	shuffle($alphabet);
 		
 	for($x = 0; $x < $arrlength; $x++) {
 	
-    echo $alphabet[$x];
+  //  echo $alphabet[$x];
 
 	}
     
-    echo "<br>"; 
+    //echo "<br>"; 
     //turn array into string to save database
     $catArray = mysql_escape_string(serialize($alphabet));
-    echo $catArray; 
+   // echo $catArray; 
     
-    echo "<br>";
+   // echo "<br>";
     $sql = "INSERT INTO letters (letterArray, code) VALUES ('{$catArray}', '{$code}') "; 
   
   if ($conn->query($sql) === TRUE) {
-   echo "RANDOM ALPHA SUBMITTED";
+   //echo "RANDOM ALPHA SUBMITTED";
     } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+  //  echo "Error: " . $sql . "<br>" . $conn->error;
     }
     
     
@@ -189,14 +189,24 @@ if(typeof(EventSource) !== "undefined") {
 }
 </script>
   
+  
+   <!--connect to css page-->
+  <link rel="stylesheet" type="text/css" href="game.css">
+  
+  
+  
+  
 </head>
 <body>
     <!-- banner -->
     <div class="container">
-    <div class="jumbotron">
+          <a href="index.html" >
+      <div class="jumbotron">
+ 
       <h1>STOP! Game! </h1>
       <p>  Player ID:  <?php echo  $users_name ?> </p> 
-    </div>
+    </a>
+    </div> 
     <br><br><br><br>
     <!-- output userinfo -->
 
