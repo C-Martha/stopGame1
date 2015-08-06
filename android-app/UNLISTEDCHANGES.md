@@ -6,12 +6,12 @@ both have very minor changes from their defaults
 in manifests.xml internet permissions must be added
 
 in strings.xml add the following (without the '''s):
-'''<string-array name="PlayerCountArray">
-'''        <item>2</item>
-'''        <item>3</item>
-'''        <item>4</item>
-'''        <item>5</item>
-'''        <item>6</item>
-'''        <item>7</item>
-'''        <item>8</item>
-'''    </string-array>
+< s tring-array name="PlayerCountArray">
+        < i tem>2</item>
+        < i tem>3</item>
+        < i tem>4</item>
+        < i tem>5</item>
+        < i tem>6</item>
+        < i tem>7</item>
+        < i tem>8</item>
+    </s tring-array>
