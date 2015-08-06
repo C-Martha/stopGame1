@@ -83,13 +83,3 @@ public class ResultsPage extends ActionBarActivity {
     }
 
 }
-//I don't know if anyone will read this, but I have a few final thoughts on this project that I want
-// to write down. I wish I could have finished this little game, but things just didn't work out
-// and our group worked too slow. I wound up waiting more often than coding, with plenty of times
-// when any one of the 3 of us would just drop off the face of the earth for days at a time. We all
-// wound up building our parts of the project separately, so the database was designed for the
-// webapp since the same person created both of those, and I worked alone on the android app. When
-// the time came to connect the android app to the database I had to redesign a large portion of it
-// to make it fit with the design of the database, and even then the request scripts never got
-// finished. By the end I had a mostly complete app with no connection, and not enough time
-// to make it work.
